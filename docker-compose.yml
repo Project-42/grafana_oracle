@@ -14,7 +14,7 @@ services:
     image: prom/prometheus:v2.24.0
     container_name: prometheus
     env_file:
-      - ./config
+      - config
     volumes:
       - ./prometheus:/etc/prometheus
       - prometheus_data:/prometheus
@@ -38,7 +38,7 @@ services:
   oracledbexporter:
     image: iamseth/oracledb_exporter
     env_file:
-      - ./config
+      - config
     container_name: oracledbexporter
     volumes:
       - ./oracledbexporter:/etc/oracledb_exporter
@@ -115,6 +115,8 @@ services:
   grafana:
     image: grafana/grafana:7.3.7
     container_name: grafana
+    env_file:
+      - config
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
