@@ -5,7 +5,9 @@ networks:
 
 volumes:
     prometheus_data: {}
+    #  external: true
     grafana_data: {}
+    #  external: true
 
 
 services:
@@ -15,7 +17,7 @@ services:
     container_name: prometheus
     volumes:
       - ./prometheus:/etc/prometheus
-      - ./prometheus_data:/prometheus
+      - prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -109,7 +111,7 @@ services:
     image: grafana/grafana:7.3.7
     container_name: grafana
     volumes:
-      - ./grafana_data:/var/lib/grafana
+      - grafana_data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
     environment:
       - GF_SECURITY_ADMIN_USER=${GF_ADMIN_USER}
