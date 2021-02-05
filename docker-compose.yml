@@ -44,7 +44,8 @@ services:
       - ./oracledbexporter:/etc/oracledb_exporter
     environment:
       - 'NLS_LANG=AMERICAN_AMERICA.WE8ISO8859P1'
-      - 'DATA_SOURCE_NAME=${DB_CONNECTION_STRING:-dbsnmp/Welcome1@//rac1-scan:1521/db122}'
+      - 'DATA_SOURCE_NAME=${DB_CONNECTION_STRING}
+#      - 'DATA_SOURCE_NAME=${DB_CONNECTION_STRING:-dbsnmp/Welcome1@//rac1-scan:1521/db122}'
 #      - 'DATA_SOURCE_NAME=dbsnmp/Welcome1@//rac2-scan:1521/st19'
 #      - 'CUSTOM_METRICS=/etc/oracledb_exporter/custom-metrics.toml'
     restart: unless-stopped
@@ -121,8 +122,8 @@ services:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
     environment:
-      - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
-      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
+      - GF_SECURITY_ADMIN_USER=${ADMIN_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD}
       - GF_USERS_ALLOW_SIGN_UP=false
       - GF_INSTALL_PLUGINS=grafana-piechart-panel,michaeldmoore-annunciator-panel
     restart: unless-stopped
