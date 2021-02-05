@@ -13,8 +13,8 @@ services:
   prometheus:
     image: prom/prometheus:v2.24.0
     container_name: prometheus
-    env_file:
-      - config
+#    env_file:
+#      - config
     volumes:
       - ./prometheus:/etc/prometheus
       - prometheus_data:/prometheus
@@ -37,8 +37,8 @@ services:
 
   oracledbexporter:
     image: iamseth/oracledb_exporter
-    env_file:
-      - config
+#    env_file:
+#      - config
     container_name: oracledbexporter
     volumes:
       - ./oracledbexporter:/etc/oracledb_exporter
@@ -116,14 +116,14 @@ services:
   grafana:
     image: grafana/grafana:7.3.7
     container_name: grafana
-    env_file:
-      - config
+#    env_file: 
+#      - config
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
     environment:
-      - GF_SECURITY_ADMIN_USER=${ADMIN_USER}
-      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - GF_SECURITY_ADMIN_USER=${GF_ADMIN_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_ADMIN_PASSWORD}
       - GF_USERS_ALLOW_SIGN_UP=false
       - GF_INSTALL_PLUGINS=grafana-piechart-panel,michaeldmoore-annunciator-panel
     restart: unless-stopped
