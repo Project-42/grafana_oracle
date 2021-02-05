@@ -1,4 +1,4 @@
-version: '2.1'
+version: '3.4'
 
 networks:
   monitor-net:
@@ -30,6 +30,20 @@ services:
       - monitor-net
     labels:
       org.label-schema.group: "monitoring"
+  oracledbexporter:
+    image: iamseth/oracledb_exporter
+    container_name: oracledbexporter
+    environment:
+      - 'DATA_SOURCE_NAME=dbsnmp/Welcome1@//rac2-scan:1521/st19'
+    restart: unless-stopped
+    expose:
+      - 9161
+#    networks:
+#      - host-net
+    network_mode: host
+    labels:
+      org.label-schema.group: "monitoring"
+
 
   alertmanager:
     image: prom/alertmanager:v0.21.0
@@ -94,6 +108,7 @@ services:
       - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
       - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
       - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel,michaeldmoore-annunciator-panel
     restart: unless-stopped
     expose:
       - 3000
