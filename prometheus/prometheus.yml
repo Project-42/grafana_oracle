@@ -21,8 +21,8 @@ scrape_configs:
   - job_name: 'oracledbexporter'
     scrape_interval: 5s
     static_configs:
-      - targets: ['192.168.2.60:9161']
-
+      - targets: ['192.168.1.60:9161']
+#      - targets: ['oracledbexporter:9161']
 
   - job_name: 'cadvisor'
     scrape_interval: 5s

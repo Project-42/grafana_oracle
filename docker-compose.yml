@@ -7,11 +7,14 @@ volumes:
     prometheus_data: {}
     grafana_data: {}
 
+
 services:
 
   prometheus:
     image: prom/prometheus:v2.24.0
     container_name: prometheus
+    env_file:
+      - ./config
     volumes:
       - ./prometheus:/etc/prometheus
       - prometheus_data:/prometheus
@@ -29,16 +32,28 @@ services:
       - monitor-net
     labels:
       org.label-schema.group: "monitoring"
+
+
+
   oracledbexporter:
     image: iamseth/oracledb_exporter
+    env_file:
+      - ./config
     container_name: oracledbexporter
+    volumes:
+      - ./oracledbexporter:/etc/oracledb_exporter
     environment:
-      - 'DATA_SOURCE_NAME=dbsnmp/Welcome1@//rac2-scan:1521/st19'
+      - 'NLS_LANG=AMERICAN_AMERICA.WE8ISO8859P1'
+      - 'DATA_SOURCE_NAME=${DB_CONNECTION_STRING:-dbsnmp/Welcome1@//rac2-scan:1521/st19}'
+#      - 'DATA_SOURCE_NAME=dbsnmp/Welcome1@//rac2-scan:1521/st19'
+#      - 'CUSTOM_METRICS=/etc/oracledb_exporter/custom-metrics.toml'
     restart: unless-stopped
     expose:
       - 9161
+#    links:
+#      - "prometheus"
 #    networks:
-#      - host-net
+#      - monitor-net
     network_mode: host
     labels:
       org.label-schema.group: "monitoring"
