@@ -4,3 +4,4 @@
 .idea/
 grafana_data/*
 prometheus_data/*
+*.bk
