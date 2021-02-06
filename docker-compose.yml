@@ -45,7 +45,7 @@ services:
       - 'DATA_SOURCE_NAME=${DB_CONNECTION_STRING}'
 #      - 'DATA_SOURCE_NAME=${DB_CONNECTION_STRING:-dbsnmp/Welcome1@//rac1-scan:1521/db122}'
 #      - 'DATA_SOURCE_NAME=dbsnmp/Welcome1@//rac2-scan:1521/st19'
-      - 'CUSTOM_METRICS=/etc/oracledb_exporter/custom-metrics.toml'
+#      - 'CUSTOM_METRICS=/etc/oracledb_exporter/custom-metrics.toml'
     restart: unless-stopped
     expose:
       - 9161
