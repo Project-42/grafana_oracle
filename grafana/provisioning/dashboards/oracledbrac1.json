@@ -16,8 +16,8 @@
   "editable": true,
   "gnetId": 3333,
   "graphTooltip": 1,
-  "id": 6,
-  "iteration": 1612562648557,
+  "id": 2,
+  "iteration": 1612616751765,
   "links": [
     {
       "asDropdown": true,
@@ -146,30 +146,28 @@
     },
     {
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": true,
-      "colors": [
-        "rgba(245, 54, 54, 0.9)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(50, 172, 45, 0.97)"
-      ],
       "datasource": "Prometheus",
-      "decimals": null,
-      "editable": true,
-      "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "mappings": [],
+          "nullValueMode": "connected",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1000
+              }
+            ]
+          },
+          "unit": "short"
         },
         "overrides": []
-      },
-      "format": "short",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
       },
       "gridPos": {
         "h": 4,
@@ -177,63 +175,46 @@
         "x": 6,
         "y": 1
       },
-      "height": "125px",
       "id": 13,
       "interval": "$interval",
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
+      "maxDataPoints": 1000,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
         },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "80%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true
+        "textMode": "value"
       },
-      "tableColumn": "",
+      "pluginVersion": "7.3.7",
       "targets": [
         {
           "calculatedInterval": "10m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "oracledb_sessions_active{instance=\"$host\"}",
+          "expr": "oracledb_resource_current_utilization{resource_name=\"sessions\"}",
           "format": "time_series",
+          "instant": false,
           "interval": "$interval",
           "intervalFactor": 1,
-          "legendFormat": "",
+          "legendFormat": "{{resource_name}}",
           "metric": "",
           "refId": "A",
           "step": 60
+        },
+        {
+          "refId": "B"
         }
       ],
-      "thresholds": "",
-      "title": "active sessions",
-      "type": "singlestat",
-      "valueFontSize": "100%",
-      "valueMaps": [],
-      "valueName": "current"
+      "title": "Active Sessions",
+      "type": "stat"
     },
     {
       "cacheTimeout": null,
@@ -434,6 +415,149 @@
       "type": "row"
     },
     {
+      "cacheTimeout": null,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 60
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 6
+      },
+      "id": 65,
+      "interval": null,
+      "links": [],
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "7.3.7",
+      "targets": [
+        {
+          "expr": "oracledb_asm_diskgroup_free/oracledb_asm_diskgroup_total*100",
+          "interval": "",
+          "legendFormat": "{{name}}",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Diskgroup Free %",
+      "type": "gauge"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 5
+              },
+              {
+                "color": "yellow",
+                "value": 7
+              },
+              {
+                "color": "green",
+                "value": 10
+              }
+            ]
+          },
+          "unit": "decgbytes"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TEMP"
+            },
+            "properties": []
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 6
+      },
+      "id": 67,
+      "interval": null,
+      "links": [],
+      "options": {
+        "displayMode": "gradient",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "7.3.7",
+      "targets": [
+        {
+          "expr": "oracledb_tablespace_free{type=\"PERMANENT\"}/(1024*1024*1024)",
+          "interval": "",
+          "legendFormat": "{{tablespace}}",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Tablespace Free GB",
+      "type": "bargauge"
+    },
+    {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -451,7 +575,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 6
+        "y": 14
       },
       "hiddenSeries": false,
       "id": 57,
@@ -548,7 +672,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 6
+        "y": 14
       },
       "hiddenSeries": false,
       "id": 58,
@@ -634,7 +758,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 13
+        "y": 21
       },
       "id": 63,
       "panels": [],
@@ -664,7 +788,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 14
+        "y": 22
       },
       "hiddenSeries": false,
       "id": 53,
@@ -772,7 +896,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 14
+        "y": 22
       },
       "hiddenSeries": false,
       "id": 54,
@@ -880,7 +1004,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 21
+        "y": 29
       },
       "hiddenSeries": false,
       "id": 55,
@@ -988,7 +1112,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 21
+        "y": 29
       },
       "hiddenSeries": false,
       "id": 56,
@@ -1096,7 +1220,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 28
+        "y": 36
       },
       "hiddenSeries": false,
       "id": 59,
@@ -1204,7 +1328,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 28
+        "y": 36
       },
       "hiddenSeries": false,
       "id": 60,
@@ -1303,7 +1427,7 @@
         "allFormat": "glob",
         "allValue": null,
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "192.168.1.60:9161",
           "value": "192.168.1.60:9161"
         },
@@ -1335,9 +1459,9 @@
         "auto_count": 200,
         "auto_min": "1s",
         "current": {
-          "selected": false,
-          "text": "1m",
-          "value": "1m"
+          "selected": true,
+          "text": "5s",
+          "value": "5s"
         },
         "datasource": "Prometheus",
         "error": null,
@@ -1359,12 +1483,12 @@
             "value": "1s"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "5s",
             "value": "5s"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "1m",
             "value": "1m"
           },
@@ -1390,6 +1514,7 @@
           }
         ],
         "query": "1s,5s,1m,5m,1h,6h,1d",
+        "queryValue": "",
         "refresh": 2,
         "skipUrlSync": false,
         "type": "interval"
@@ -1434,5 +1559,5 @@
   "timezone": "browser",
   "title": "Oracledb2",
   "uid": "B89lXrYGk",
-  "version": 1
+  "version": 8
 }
