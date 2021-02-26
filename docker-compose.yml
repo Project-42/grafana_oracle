@@ -108,8 +108,10 @@ services:
       org.label-schema.group: "monitoring"
 
   grafana:
-    image: grafana/grafana:7.3.7
+    #image: grafana/grafana:7.3.7
+    image: grafana/grafana:latest
     container_name: grafana
+    #user: "472"
     volumes:
       - ./grafana_data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
